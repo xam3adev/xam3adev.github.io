@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xam3aDev — Indie Game Developer</title>
+    <meta name="description" content="Xam3aDev is an indie game developer, programmer, and creator of experimental software projects." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='%236F00FF'>◈</text></svg>" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Xam3aDev — Indie Game Developer" />
+    <meta property="og:description" content="Building games, experimenting with ideas, and turning strange concepts into interactive experiences." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://xam3adev.dev" />
+    <meta name="theme-color" content="#6F00FF" />
+
+    <style>
+        /* ============================================================
+                   CSS CUSTOM PROPERTIES & RESET
+                   ============================================================ */
+        :root {
+            --primary: #6F00FF;
+            --primary-dim: rgba(111, 0, 255, 0.15);
+            --primary-glow: rgba(111, 0, 255, 0.4);
+            --secondary: #1034A6;
+            --secondary-dim: rgba(16, 52, 166, 0.15);
+            --bg: #0b0b0f;
+            --bg-card: rgba(18, 18, 30, 0.85);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --text: #e8e8f0;
+            --text-muted: #9898b0;
+            --text-dim: #5a5a78;
+            --border: rgba(111, 0, 255, 0.2);
+            --radius: 14px;
+            --radius-sm: 8px;
+            --shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            --transition: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+            --max-width: 1200px;
+            --nav-height: 68px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+        a:hover {
+            color: #9a4dff;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8a2be2;
+        }
+
+        /* ============================================================
+                   UTILITY
+                   ============================================================ */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-padding {
+            padding: 80px 0 100px;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 40px var(--primary-glow);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 24px rgba(111, 0, 255, 0.25);
+            text-decoration: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(111, 0, 255, 0.45);
+            background: #7a1aff;
+            color: #fff;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 32px rgba(111, 0, 255, 0.35);
+        }
+        .btn-sm {
+            padding: 8px 20px;
+            font-size: 0.85rem;
+        }
+
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        /* ============================================================
+                   NAVIGATION
+                   ============================================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: var(--nav-height);
+            background: rgba(11, 11, 15, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            transition: background var(--transition);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .nav-brand {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-brand span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+        .nav-links a {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all var(--transition);
+            position: relative;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+            background: var(--primary-dim);
+        }
+        .nav-links a.active {
+            color: #fff;
+            background: var(--primary);
+            box-shadow: 0 0 20px rgba(111, 0, 255, 0.3);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+        }
+        .nav-toggle span {
+            width: 26px;
+            height: 2.5px;
+            background: var(--text);
+            border-radius: 4px;
+            transition: all var(--transition);
+        }
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ============================================================
+                   PAGES / SECTIONS
+                   ============================================================ */
+        .page {
+            display: none;
+            animation: fadeUp 0.5s ease forwards;
+            padding-top: var(--nav-height);
+        }
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================
+                   HOME HERO
+                   ============================================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 40px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(111, 0, 255, 0.08), transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 52, 166, 0.07), transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: var(--primary-dim);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 8px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), #a855f7, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subhead {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .hero .desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            margin-top: 56px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+        .hero-stats .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-stats .stat .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+        }
+        .hero-stats .stat .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* ============================================================
+                   GAMES
+                   ============================================================ */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 40px rgba(111, 0, 255, 0.06);
+        }
+
+        .game-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: var(--text-dim);
+            position: relative;
+            overflow: hidden;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .game-thumb .placeholder-icon {
+            opacity: 0.25;
+            font-size: 3rem;
+            font-weight: 300;
+        }
+        .game-thumb .status-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0e7a0;
+        }
+        .game-thumb .status-badge.in-dev {
+            color: #f9d77e;
+        }
+        .game-thumb .status-badge.released {
+            color: #7ef9a0;
+        }
+
+        .game-body {
+            padding: 20px 22px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .game-body h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .game-body .genre {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .game-body .desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            flex: 1;
+        }
+        .game-body .tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .game-body .tech span {
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .game-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .game-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+        .game-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ============================================================
+                   ZENO – LANDING
+                   ============================================================ */
+        .zeno-hero {
+            padding: 80px 0 60px;
+            position: relative;
+        }
+        .zeno-hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(111, 0, 255, 0.06), transparent 70%);
+            pointer-events: none;
+        }
+
+        .zeno-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+        .zeno-brand .logo {
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #c084fc, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .zeno-brand .version {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: var(--bg-glass);
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            -webkit-text-fill-color: var(--text-muted);
+        }
+
+        .zeno-hero .sub {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin-bottom: 28px;
+        }
+
+        .zeno-download-area {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px 40px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px 36px;
+            border: 1px solid var(--border);
+            margin-top: 16px;
+        }
+        .zeno-download-area .info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 32px;
+        }
+        .zeno-download-area .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .zeno-download-area .info-item .lbl {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+        }
+        .zeno-download-area .info-item .val {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* ============================================================
+                   ZENO – DOCUMENTATION LAYOUT
+                   ============================================================ */
+        .zeno-docs {
+            display: flex;
+            gap: 40px;
+            margin-top: 48px;
+            align-items: flex-start;
+        }
+
+        .zeno-sidebar {
+            position: sticky;
+            top: calc(var(--nav-height) + 24px);
+            width: 260px;
+            flex-shrink: 0;
+            max-height: calc(100vh - var(--nav-height) - 60px);
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        .zeno-sidebar::-webkit-scrollbar {
+            width: 3px;
+        }
+        .zeno-sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 8px;
+        }
+
+        .zeno-sidebar h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .zeno-sidebar ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .zeno-sidebar ul li a {
+            display: block;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: all var(--transition);
+            cursor: pointer;
+            border-left: 2px solid transparent;
+        }
+        .zeno-sidebar ul li a:hover,
+        .zeno-sidebar ul li a.active {
+            color: #fff;
+            background: var(--primary-dim);
+            border-left-color: var(--primary);
+        }
+        .zeno-sidebar ul li a.active {
+            color: #fff;
+            background: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .zeno-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .zeno-doc-section {
+            display: none;
+            animation: fadeUp 0.3s ease forwards;
+        }
+        .zeno-doc-section.active {
+            display: block;
+        }
+
+        .zeno-doc-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        .zeno-doc-section h2 .tag {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            background: var(--bg-glass);
+            padding: 2px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            margin-left: 12px;
+        }
+        .zeno-doc-section p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .zeno-doc-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 32px 0 12px;
+            color: #fff;
+        }
+        .zeno-doc-section h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 24px 0 8px;
+            color: #e0e0f0;
+        }
+        .zeno-doc-section ul {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-left: 20px;
+            list-style: disc;
+        }
+        .zeno-doc-section code {
+            background: var(--bg-glass);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            color: #c084fc;
+        }
+
+        /* code blocks */
+        .code-block {
+            position: relative;
+            background: #0d0d1a;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            margin: 16px 0 24px;
+            overflow: hidden;
+        }
+        .code-block pre {
+            padding: 20px 24px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: #d4d4e8;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .code-block .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font);
+        }
+        .code-block .copy-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .code-block .copy-btn.copied {
+            background: #22c55e;
+            color: #fff;
+            border-color: #22c55e;
+        }
+
+        /* syntax highlighting (simple) */
+        .code-block .kw {
+            color: #c084fc;
+        }
+        .code-block .str {
+            color: #fcd34d;
+        }
+        .code-block .cmt {
+            color: #6b7280;
+            font-style: italic;
+        }
+        .code-block .fn {
+            color: #60a5fa;
+        }
+        .code-block .num {
+            color: #f472b6;
+        }
+        .code-block .var {
+            color: #a78bfa;
+        }
+        .code-block .op {
+            color: #f87171;
+        }
+        .code-block .bool {
+            color: #34d399;
+        }
+
+        /* ============================================================
+                   ABOUT
+                   ============================================================ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 32px;
+        }
+        .about-grid .bio {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        .about-grid .bio strong {
+            color: #fff;
+        }
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .about-tags span {
+            padding: 4px 18px;
+            border-radius: 30px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .about-skills {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            border: 1px solid var(--border);
+        }
+        .about-skills h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .about-skills ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+        }
+        .about-skills ul li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .about-skills ul li::before {
+            content: '▸';
+            color: var(--primary);
+        }
+
+        /* ============================================================
+                   CONTACT
+                   ============================================================ */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+        .contact-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all var(--transition);
+        }
+        .contact-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .contact-card .name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+        .contact-card .handle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+        .contact-card a {
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+        .contact-card a:hover {
+            color: var(--primary);
+        }
+
+        .contact-note {
+            margin-top: 40px;
+            padding: 20px 28px;
+            border-radius: var(--radius);
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        /* ============================================================
+                   FOOTER
+                   ============================================================ */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0 32px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer .brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .footer .brand span {
+            color: var(--primary);
+        }
+        .footer .tagline {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footer .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+        }
+        .footer .links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color var(--transition);
+        }
+        .footer .links a:hover {
+            color: var(--primary);
+        }
+        .footer .copy {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ============================================================
+                   RESPONSIVE
+                   ============================================================ */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .zeno-docs {
+                flex-direction: column;
+            }
+            .zeno-sidebar {
+                position: relative;
+                top: 0;
+                width: 100%;
+                max-height: 300px;
+                padding-right: 0;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+            .zeno-sidebar ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            .zeno-sidebar ul li a {
+                padding: 4px 14px;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                font-size: 0.85rem;
+            }
+            .zeno-sidebar ul li a.active,
+            .zeno-sidebar ul li a:hover {
+                border-left-color: transparent;
+                border-bottom-color: var(--primary);
+            }
+            .zeno-download-area {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                background: rgba(11, 11, 15, 0.96);
+                backdrop-filter: blur(16px);
+                flex-direction: column;
+                padding: 20px 24px 28px;
+                gap: 4px;
+                border-bottom: 1px solid var(--border);
+                transform: translateY(-120%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                pointer-events: none;
+            }
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .nav-links a {
+                padding: 10px 16px;
+                width: 100%;
+                text-align: center;
+                font-size: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+            .hero .subhead {
+                font-size: 1.1rem;
+            }
+            .hero-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-skills ul {
+                grid-template-columns: 1fr;
+            }
+            .footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .zeno-brand .logo {
+                font-size: 2.6rem;
+            }
+            .zeno-download-area .info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .zeno-hero {
+                padding: 40px 0 30px;
+            }
+            .code-block pre {
+                font-size: 0.78rem;
+                padding: 14px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+    NAVIGATION
+    ============================================================ -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a href="#" class="nav-brand" data-page="home">Xam3a<span>Dev</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks" role="menubar">
+                <li role="none"><a href="#" data-page="home" role="menuitem" class="active">Home</a></li>
+                <li role="none"><a href="#" data-page="games" role="menuitem">Games</a></li>
+                <li role="none"><a href="#" data-page="zeno" role="menuitem">Zeno</a></li>
+                <li role="none"><a href="#" data-page="about" role="menuitem">About</a></li>
+                <li role="none"><a href="#" data-page="contact" role="menuitem">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    PAGE: HOME
+    ============================================================ -->
+    <section class="page active" id="page-home" role="main">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">✦ Indie Game Developer</div>
+                    <h1>Xam3a<span>Dev</span></h1>
+                    <p class="subhead">Indie Game Developer</p>
+                    <p class="desc">
+                        Building games, experimenting with ideas, and turning strange concepts
+                        into interactive experiences.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#" class="btn" data-page="games">View Games</a>
+                        <a href="#" class="btn btn-outline" data-page="zeno">Explore Zeno</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="label">Game Dev</span>
+                            <span class="value">✦ Creative</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Programming</span>
+                            <span class="value">✦ Experimental</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Projects</span>
+                            <span class="value">✦ Diverse</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Software</span>
+                            <span class="value">✦ Zeno Lang</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PAGE: GAMES
+    ============================================================ -->
+    <section class="page" id="page-games" role="main">
+        <div class="container section-padding">
+            <h2 class="section-title">Games</h2>
+            <p class="section-sub">Experimental games, interactive toys, and strange concepts brought to life.</p>
+            <div class="games-grid" id="gamesGrid"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PAGE: ZENO
+    ============================================================ -->
+    <section class="page" id="page-zeno" role="main">
+        <div class="container section-padding" style="padding-top:40px;">
+
+            <!-- Zeno Hero -->
+            <div class="zeno-hero">
+                <div class="zeno-brand">
+                    <span class="logo">Zeno</span>
+                    <span class="version">Version 1.0</span>
+                </div>
+                <p class="sub">
+                    A small, readable programming language created by Xam3aDev.
+                </p>
+                <div class="zeno-download-area">
+                    <div class="info">
+                        <div class="info-item">
+                            <span class="lbl">Latest Version</span>
+                            <span class="val">1.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="lbl">Platform</span>
+                            <span class="val">Windows</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="lbl">File Type</span>
+                            <span class="val">Installer (.exe)</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn" id="zenoDownloadBtn" target="_blank" rel="noopener noreferrer">
+                        ⬇ Download Zeno
+                    </a>
+                </div>
+            </div>
+
+            <!-- Zeno Docs -->
+            <div style="margin-top:20px;">
+                <h2 style="font-size:1.6rem; font-weight:700; margin-bottom:4px;">Documentation</h2>
+                <p style="color:var(--text-muted);">Complete reference for Zeno 1.0</p>
+            </div>
+
+            <div class="zeno-docs">
+                <!-- Sidebar -->
+                <nav class="zeno-sidebar" aria-label="Zeno documentation navigation">
+                    <h4>Topics</h4>
+                    <ul id="zenoSidebar">
+                        <!-- populated by JS -->
+                    </ul>
+                </nav>
+
+                <!-- Content -->
+                <div class="zeno-content" id="zenoContent">
+                    <!-- populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PAGE: ABOUT
+    ============================================================ -->
+    <section class="page" id="page-about" role="main">
+        <div class="container section-padding">
+            <h2 class="section-title">About</h2>
+            <p class="section-sub">Indie game developer, programmer, and creative technologist.</p>
+
+            <div class="about-grid">
+                <div>
+                    <div class="bio" id="aboutBio">
+                        <!-- populated by JS -->
+                    </div>
+                    <div class="about-tags" id="aboutTags">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+                <div class="about-skills">
+                    <h3>Technologies &amp; Tools</h3>
+                    <ul id="skillsList">
+                        <!-- populated by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PAGE: CONTACT
+    ============================================================ -->
+    <section class="page" id="page-contact" role="main">
+        <div class="container section-padding">
+            <h2 class="section-title">Contact</h2>
+            <p class="section-sub">Find Xam3aDev around the web.</p>
+
+            <div class="contact-grid" id="contactGrid">
+                <!-- populated by JS -->
+            </div>
+
+            <div class="contact-note">
+                For direct inquiries, email <strong>hamza6h11h2011@gmail.com</strong>
+                <br><span style="font-size:0.85rem; color:var(--text-dim);">(This site does not process forms directly; use the email above.)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div>
+                <div class="brand">Xam3a<span>Dev</span></div>
+                <div class="tagline">Indie Game Developer</div>
+            </div>
+            <div class="links">
+                <a href="#" data-page="home">Home</a>
+                <a href="#" data-page="games">Games</a>
+                <a href="#" data-page="zeno">Zeno</a>
+                <a href="#" data-page="about">About</a>
+                <a href="#" data-page="contact">Contact</a>
+                <a href="https://github.com/xam3adev" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.youtube.com/@Xam3aDev" target="_blank" rel="noopener noreferrer">YouTube</a>
+                <a href="https://xam3adev.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
+            </div>
+            <div class="copy">&copy; Xam3aDev</div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    JAVASCRIPT — DATA & APP
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // CONFIGURATION — edit these values to customize the site
+        // ============================================================
+
+        const CONFIG = {
+            // Zeno GitHub Releases URL — developer replaces this with the actual URL
+            ZENO_RELEASES_URL: 'https://github.com/xam3adev/zeno/releases/download/V1.0/Zeno-1.0-Setup.exe',
+
+            // About
+            about: {
+                bio: `<p>Xam3aDev is an <strong>indie game developer</strong>, <strong>programmer</strong>, and
+              <strong>creative technologist</strong> passionate about building games, experimenting with ideas,
+              and turning strange concepts into interactive experiences.</p>
+              <p style="margin-top:12px;">With a focus on game design, programming languages, and experimental
+              software, Xam3aDev explores the intersection of art and code.</p>`,
+                tags: ['Indie Game Developer', 'Programmer', 'Game Developer', 'Creative Technologist'],
+                skills: ['Godot', 'Python', 'Git', 'GitHub', 'HTML', 'Game Development', 'Programming']
+            },
+
+            // Social links
+            social: [{
+                name: 'GitHub',
+                url: 'https://github.com/xam3adev',
+                handle: 'xam3adev'
+            }, {
+                name: 'YouTube',
+                url: 'https://www.youtube.com/@Xam3aDev',
+                handle: '@Xam3aDev'
+            }, {
+                name: 'itch.io',
+                url: 'https://xam3adev.itch.io/',
+                handle: 'xam3adev.itch.io'
+            }, {
+                name: 'Email',
+                url: 'mailto:hamza6h11h2011@gmail.com',
+                handle: 'hamza6h11h2011@gmail.com'
+            }],
+
+            // Games — add or remove games here
+            games: [{
+                id: 't-20',
+                title: 'T-20',
+                thumbnail: 'TT',
+                description: 'Every 20 seconds, Something happens. Survive as long as you can.',
+                genre: 'Survival',
+                status: 'released',
+                statusLabel: 'Released',
+                tech: ['Godot', 'GDScript'],
+                itchUrl: 'https://xam3adev.itch.io/t-20',
+                videoUrl: 'https://youtu.be/9qmGaWv2MKc?si=vH9Pd2_i9b5-h4LV'
+            }]
+        };
+
+        // ============================================================
+        // ZENO DOCUMENTATION DATA
+        // ============================================================
+
+        const ZENO_DOCS = [{
+            id: 'getting-started',
+            title: 'Getting Started',
+            content: `
+            <h2>Getting Started <span class="tag">Zeno 1.0</span></h2>
+            <p>Zeno is a small, readable programming language created by Xam3aDev. It's designed to be simple to learn and use, with a clean syntax that feels familiar to beginners and experienced developers alike.</p>
+            <p>This documentation covers the complete Zeno 1.0 language specification.</p>
+            <h3>Key Features</h3>
+            <ul>
+              <li>Simple, readable syntax</li>
+              <li>Dynamic typing with <code>box</code> variables</li>
+              <li>First-class functions with <code>com</code></li>
+              <li>Built-in I/O with <code>write()</code> and <code>read()</code></li>
+              <li>Conditionals and loops</li>
+              <li>.zn source files</li>
+            </ul>
+            <p>Source files use the <strong>.zn</strong> extension.</p>
+          `
+        }, {
+            id: 'installation',
+            title: 'Installation',
+            content: `
+            <h2>Installation <span class="tag">Zeno 1.0</span></h2>
+            <p>To install Zeno on Windows, download the installer from the GitHub Releases page and run it.</p>
+            <p>The installer will add Zeno to your system PATH so you can run it from the command line.</p>
+            <div class="code-block">
+              <pre><span class="cmt"># After installation, verify it works:</span>
+              zeno --version
+              <span class="cmt"># Output: Zeno 1.0</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p>For other platforms, please check the GitHub repository for build instructions.</p>
+          `
+        }, {
+            id: 'hello-world',
+            title: 'Hello World',
+            content: `
+            <h2>Hello World <span class="tag">Zeno 1.0</span></h2>
+            <p>A simple "Hello, World!" program in Zeno:</p>
+            <div class="code-block">
+              <pre><span class="cmt"># Hello World in Zeno</span>
+              <span class="fn">write</span>(<span class="str">"Hello, World!"</span>)</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p>Save this as <code>hello.zn</code> and run it with the Zeno interpreter.</p>
+          `
+        }, {
+            id: 'variables',
+            title: 'Variables',
+            content: `
+            <h2>Variables <span class="tag">Zeno 1.0</span></h2>
+            <p>In Zeno, variables are declared with the <code>box</code> keyword.</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">name</span> <span class="op">=</span> <span class="str">"Zeno"</span>
+              <span class="kw">box</span> <span class="var">age</span> <span class="op">=</span> <span class="num">1</span>
+              <span class="kw">box</span> <span class="var">active</span> <span class="op">=</span> <span class="bool">true</span>
+
+              <span class="fn">write</span>(name)
+              <span class="fn">write</span>(age)
+              <span class="fn">write</span>(active)</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p>Variables are dynamically typed — they can hold any value.</p>
+          `
+        }, {
+            id: 'data-types',
+            title: 'Data Types',
+            content: `
+            <h2>Data Types <span class="tag">Zeno 1.0</span></h2>
+            <p>Zeno supports several built-in data types:</p>
+            <ul>
+              <li><strong>Strings</strong> — text, e.g. <code>"hello"</code></li>
+              <li><strong>Numbers</strong> — integers and floats, e.g. <code>42</code>, <code>3.14</code></li>
+              <li><strong>Booleans</strong> — <code>true</code> or <code>false</code></li>
+            </ul>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">text</span> <span class="op">=</span> <span class="str">"This is a string"</span>
+              <span class="kw">box</span> <span class="var">number</span> <span class="op">=</span> <span class="num">42</span>
+              <span class="kw">box</span> <span class="var">pi</span> <span class="op">=</span> <span class="num">3.14159</span>
+              <span class="kw">box</span> <span class="var">flag</span> <span class="op">=</span> <span class="bool">false</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'strings',
+            title: 'Strings',
+            content: `
+            <h2>Strings <span class="tag">Zeno 1.0</span></h2>
+            <p>Strings in Zeno are sequences of characters enclosed in double quotes.</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">greeting</span> <span class="op">=</span> <span class="str">"Hello, Zeno!"</span>
+              <span class="kw">box</span> <span class="var">name</span> <span class="op">=</span> <span class="str">"Xam3aDev"</span>
+
+              <span class="fn">write</span>(greeting)
+              <span class="fn">write</span>(<span class="str">"Welcome, "</span> <span class="op">+</span> name)</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p>Strings can be concatenated with the <code>+</code> operator.</p>
+          `
+        }, {
+            id: 'numbers',
+            title: 'Numbers',
+            content: `
+            <h2>Numbers <span class="tag">Zeno 1.0</span></h2>
+            <p>Zeno supports both integer and floating-point numbers.</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">x</span> <span class="op">=</span> <span class="num">10</span>
+              <span class="kw">box</span> <span class="var">y</span> <span class="op">=</span> <span class="num">3.5</span>
+              <span class="kw">box</span> <span class="var">sum</span> <span class="op">=</span> x <span class="op">+</span> y
+
+              <span class="fn">write</span>(sum)  <span class="cmt"># 13.5</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'booleans',
+            title: 'Booleans',
+            content: `
+            <h2>Booleans <span class="tag">Zeno 1.0</span></h2>
+            <p>Boolean values in Zeno are <code>true</code> and <code>false</code>.</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">isReady</span> <span class="op">=</span> <span class="bool">true</span>
+              <span class="kw">box</span> <span class="var">isDone</span> <span class="op">=</span> <span class="bool">false</span>
+
+              <span class="fn">write</span>(isReady)
+              <span class="fn">write</span>(<span class="op">!</span>isDone)  <span class="cmt"># true</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'operators',
+            title: 'Operators',
+            content: `
+            <h2>Operators <span class="tag">Zeno 1.0</span></h2>
+            <p>Zeno provides a full set of operators for arithmetic, comparison, and logic.</p>
+            <h3>Arithmetic</h3>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">a</span> <span class="op">=</span> <span class="num">10</span>
+              <span class="kw">box</span> <span class="var">b</span> <span class="op">=</span> <span class="num">3</span>
+
+              <span class="fn">write</span>(a <span class="op">+</span> b)  <span class="cmt"># 13</span>
+              <span class="fn">write</span>(a <span class="op">-</span> b)  <span class="cmt"># 7</span>
+              <span class="fn">write</span>(a <span class="op">*</span> b)  <span class="cmt"># 30</span>
+              <span class="fn">write</span>(a <span class="op">/</span> b)  <span class="cmt"># 3.333...</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <h3>Comparison</h3>
+            <div class="code-block">
+              <pre><span class="fn">write</span>(<span class="num">5</span> <span class="op">==</span> <span class="num">5</span>)   <span class="cmt"># true</span>
+              <span class="fn">write</span>(<span class="num">5</span> <span class="op">!=</span> <span class="num">3</span>)   <span class="cmt"># true</span>
+              <span class="fn">write</span>(<span class="num">5</span> <span class="op">&gt;</span> <span class="num">3</span>)    <span class="cmt"># true</span>
+              <span class="fn">write</span>(<span class="num">5</span> <span class="op">&lt;</span> <span class="num">3</span>)    <span class="cmt"># false</span>
+              <span class="fn">write</span>(<span class="num">5</span> <span class="op">&gt;=</span> <span class="num">5</span>)   <span class="cmt"># true</span>
+              <span class="fn">write</span>(<span class="num">5</span> <span class="op">&lt;=</span> <span class="num">4</span>)   <span class="cmt"># false</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'logical',
+            title: 'Logical Operators',
+            content: `
+            <h2>Logical Operators <span class="tag">Zeno 1.0</span></h2>
+            <p>Zeno supports <code>&amp;&amp;</code> (AND), <code>||</code> (OR), and <code>!</code> (NOT).</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">a</span> <span class="op">=</span> <span class="bool">true</span>
+              <span class="kw">box</span> <span class="var">b</span> <span class="op">=</span> <span class="bool">false</span>
+
+              <span class="fn">write</span>(a <span class="op">&amp;&amp;</span> b)  <span class="cmt"># false</span>
+              <span class="fn">write</span>(a <span class="op">||</span> b)  <span class="cmt"># true</span>
+              <span class="fn">write</span>(<span class="op">!</span>a)       <span class="cmt"># false</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'if',
+            title: 'if / elif / else',
+            content: `
+            <h2>Conditionals <span class="tag">Zeno 1.0</span></h2>
+            <p>Zeno supports <code>if</code>, <code>elif</code>, and <code>else</code> for conditional execution.</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">score</span> <span class="op">=</span> <span class="num">85</span>
+
+              <span class="kw">if</span>(score <span class="op">&gt;=</span> <span class="num">90</span>){
+                  <span class="fn">write</span>(<span class="str">"Grade: A"</span>)
+              }
+              <span class="kw">elif</span>(score <span class="op">&gt;=</span> <span class="num">80</span>){
+                  <span class="fn">write</span>(<span class="str">"Grade: B"</span>)
+              }
+              <span class="kw">else</span>{
+                  <span class="fn">write</span>(<span class="str">"Grade: C or lower"</span>)
+              }</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'while',
+            title: 'while',
+            content: `
+            <h2>while <span class="tag">Zeno 1.0</span></h2>
+            <p>The <code>while</code> loop executes a block while a condition is true.</p>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">i</span> <span class="op">=</span> <span class="num">0</span>
+              <span class="kw">while</span>(i <span class="op">&lt;</span> <span class="num">5</span>){
+                  <span class="fn">write</span>(i)
+                  i <span class="op">=</span> i <span class="op">+</span> <span class="num">1</span>
+              }
+              <span class="cmt"># Output: 0 1 2 3 4</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'for',
+            title: 'for',
+            content: `
+            <h2>for <span class="tag">Zeno 1.0</span></h2>
+            <p>The <code>for</code> loop in Zeno uses the syntax: <code>for(VAR, START, END, STEP)</code></p>
+            <div class="code-block">
+              <pre><span class="kw">for</span>(i, <span class="num">0</span>, <span class="num">10</span>, <span class="num">2</span>){
+                  <span class="fn">write</span>(i)
+              }
+              <span class="cmt"># Output: 0 2 4 6 8</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p>The loop variable <code>i</code> is automatically declared within the loop scope.</p>
+          `
+        }, {
+            id: 'break-continue',
+            title: 'break / continue',
+            content: `
+            <h2>break &amp; continue <span class="tag">Zeno 1.0</span></h2>
+            <p><code>break</code> exits a loop early. <code>continue</code> skips to the next iteration.</p>
+            <div class="code-block">
+              <pre><span class="kw">for</span>(i, <span class="num">0</span>, <span class="num">10</span>, <span class="num">1</span>){
+                  <span class="kw">if</span>(i <span class="op">==</span> <span class="num">3</span>){
+                      <span class="kw">continue</span>  <span class="cmt"># skip 3</span>
+                  }
+                  <span class="kw">if</span>(i <span class="op">==</span> <span class="num">7</span>){
+                      <span class="kw">break</span>     <span class="cmt"># stop at 7</span>
+                  }
+                  <span class="fn">write</span>(i)
+              }
+              <span class="cmt"># Output: 0 1 2 4 5 6</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'functions',
+            title: 'Functions',
+            content: `
+            <h2>Functions <span class="tag">Zeno 1.0</span></h2>
+            <p>Functions in Zeno are defined with the <code>com</code> keyword.</p>
+            <div class="code-block">
+              <pre><span class="kw">com</span> <span class="fn">greet</span>(){
+                  <span class="fn">write</span>(<span class="str">"Hello from Zeno!"</span>)
+              }
+
+              <span class="fn">greet</span>()  <span class="cmt"># Call the function</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'parameters',
+            title: 'Parameters & return',
+            content: `
+            <h2>Parameters &amp; return <span class="tag">Zeno 1.0</span></h2>
+            <p>Functions can take parameters and return values with <code>return</code>.</p>
+            <div class="code-block">
+              <pre><span class="kw">com</span> <span class="fn">add</span>(a, b){
+                  <span class="kw">return</span> a <span class="op">+</span> b
+              }
+
+              <span class="kw">box</span> <span class="var">result</span> <span class="op">=</span> <span class="fn">add</span>(<span class="num">10</span>, <span class="num">20</span>)
+              <span class="fn">write</span>(result)  <span class="cmt"># 30</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'io',
+            title: 'read() & write()',
+            content: `
+            <h2>read() &amp; write() <span class="tag">Zeno 1.0</span></h2>
+            <p><code>write()</code> outputs text. <code>read()</code> reads input from the user.</p>
+            <div class="code-block">
+              <pre><span class="fn">write</span>(<span class="str">"What is your name?"</span>)
+              <span class="kw">box</span> <span class="var">name</span> <span class="op">=</span> <span class="fn">read</span>()
+              <span class="fn">write</span>(<span class="str">"Hello, "</span> <span class="op">+</span> name <span class="op">+</span> <span class="str">"!"</span>)</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'command-line',
+            title: 'Command Line',
+            content: `
+            <h2>Command Line <span class="tag">Zeno 1.0</span></h2>
+            <p>Run Zeno scripts from the command line using the <code>zeno</code> command.</p>
+            <div class="code-block">
+              <pre><span class="cmt"># Run a script</span>
+              zeno myscript.zn
+
+              <span class="cmt"># Run with verbose output</span>
+              zeno --verbose myscript.zn
+
+              <span class="cmt"># Check version</span>
+              zeno --version</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }, {
+            id: 'examples',
+            title: 'Examples',
+            content: `
+            <h2>Examples <span class="tag">Zeno 1.0</span></h2>
+            <p>A few complete examples to get you started.</p>
+            <h3>Fahrenheit to Celsius</h3>
+            <div class="code-block">
+              <pre><span class="kw">com</span> <span class="fn">fahrenheitToCelsius</span>(f){
+                  <span class="kw">return</span> (f <span class="op">-</span> <span class="num">32</span>) <span class="op">*</span> <span class="num">5</span> <span class="op">/</span> <span class="num">9</span>
+              }
+
+              <span class="kw">box</span> <span class="var">temp</span> <span class="op">=</span> <span class="fn">fahrenheitToCelsius</span>(<span class="num">98.6</span>)
+              <span class="fn">write</span>(<span class="str">"37.0°C"</span>)  <span class="cmt"># approx</span></pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <h3>Countdown</h3>
+            <div class="code-block">
+              <pre><span class="kw">box</span> <span class="var">count</span> <span class="op">=</span> <span class="num">10</span>
+              <span class="kw">while</span>(count <span class="op">&gt;</span> <span class="num">0</span>){
+                  <span class="fn">write</span>(count)
+                  count <span class="op">=</span> count <span class="op">-</span> <span class="num">1</span>
+              }
+              <span class="fn">write</span>(<span class="str">"Liftoff!"</span>)</pre>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+          `
+        }];
+
+        // ============================================================
+        // APP — RENDER & NAVIGATION
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // ----- Render Games -----
+            const gamesGrid = document.getElementById('gamesGrid');
+            if (gamesGrid) {
+                CONFIG.games.forEach(g => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    const statusClass = g.status === 'released' ? 'released' : 'in-dev';
+                    card.innerHTML = `
+                <div class="game-thumb">
+                  <span class="placeholder-icon">${g.thumbnail || '◈'}</span>
+                  <span class="status-badge ${statusClass}">${g.statusLabel || g.status}</span>
+                </div>
+                <div class="game-body">
+                  <h3>${g.title}</h3>
+                  <div class="genre">${g.genre || 'Game'}</div>
+                  <p class="desc">${g.description || 'A game by Xam3aDev.'}</p>
+                  <div class="tech">
+                    ${(g.tech || []).map(t => `<span>${t}</span>`).join('')}
+                  </div>
+                  <div class="game-links">
+                    ${g.itchUrl ? `<a href="${g.itchUrl}" target="_blank" rel="noopener">itch.io</a>` : ''}
+                    ${g.videoUrl ? `<a href="${g.videoUrl}" target="_blank" rel="noopener">▶ Watch</a>` : ''}
+                  </div>
+                </div>
+              `;
+                    gamesGrid.appendChild(card);
+                });
+            }
+
+            // ----- Render About -----
+            const aboutBio = document.getElementById('aboutBio');
+            if (aboutBio) aboutBio.innerHTML = CONFIG.about.bio;
+
+            const aboutTags = document.getElementById('aboutTags');
+            if (aboutTags) {
+                CONFIG.about.tags.forEach(t => {
+                    const span = document.createElement('span');
+                    span.textContent = t;
+                    aboutTags.appendChild(span);
+                });
+            }
+
+            const skillsList = document.getElementById('skillsList');
+            if (skillsList) {
+                CONFIG.about.skills.forEach(s => {
+                    const li = document.createElement('li');
+                    li.textContent = s;
+                    skillsList.appendChild(li);
+                });
+            }
+
+            // ----- Render Contact -----
+            const contactGrid = document.getElementById('contactGrid');
+            if (contactGrid) {
+                CONFIG.social.forEach(s => {
+                    const card = document.createElement('div');
+                    card.className = 'contact-card';
+                    card.innerHTML = `
+                <div class="name">${s.name}</div>
+                <div class="handle">
+                  <a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.handle}</a>
+                </div>
+              `;
+                    contactGrid.appendChild(card);
+                });
+            }
+
+            // ----- Render Zeno Docs -----
+            const sidebar = document.getElementById('zenoSidebar');
+            const content = document.getElementById('zenoContent');
+
+            if (sidebar && content) {
+                // Build sidebar
+                ZENO_DOCS.forEach((doc, idx) => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = doc.title;
+                    a.dataset.doc = doc.id;
+                    if (idx === 0) a.classList.add('active');
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showZenoDoc(doc.id);
+                    });
+                    li.appendChild(a);
+                    sidebar.appendChild(li);
+                });
+
+                // Build content
+                ZENO_DOCS.forEach((doc, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'zeno-doc-section' + (idx === 0 ? ' active' : '');
+                    div.id = 'zeno-' + doc.id;
+                    div.innerHTML = doc.content;
+                    content.appendChild(div);
+                });
+
+                // After content is rendered, attach copy button handlers
+                document.querySelectorAll('.code-block .copy-btn').forEach(btn => {
+                    // already has onclick inline
+                });
+            }
+
+            function showZenoDoc(id) {
+                // Update sidebar
+                document.querySelectorAll('#zenoSidebar a').forEach(a => {
+                    a.classList.toggle('active', a.dataset.doc === id);
+                });
+                // Update content
+                document.querySelectorAll('.zeno-doc-section').forEach(el => {
+                    el.classList.toggle('active', el.id === 'zeno-' + id);
+                });
+                // Scroll to top of docs
+                const docsContainer = document.querySelector('.zeno-docs');
+                if (docsContainer) {
+                    docsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            // Expose to global for inline click handlers
+            window.showZenoDoc = showZenoDoc;
+
+            // ----- Zeno Download Button -----
+            const downloadBtn = document.getElementById('zenoDownloadBtn');
+            if (downloadBtn) {
+                downloadBtn.href = CONFIG.ZENO_RELEASES_URL;
+            }
+
+            // ----- Navigation -----
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const pages = {
+                home: document.getElementById('page-home'),
+                games: document.getElementById('page-games'),
+                zeno: document.getElementById('page-zeno'),
+                about: document.getElementById('page-about'),
+                contact: document.getElementById('page-contact')
+            };
+            const navToggle = document.getElementById('navToggle');
+            const navLinksContainer = document.getElementById('navLinks');
+
+            function navigate(pageId) {
+                // Hide all pages
+                Object.keys(pages).forEach(key => {
+                    if (pages[key]) pages[key].classList.remove('active');
+                });
+                // Show target
+                if (pages[pageId]) pages[pageId].classList.add('active');
+
+                // Update nav links
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.page === pageId);
+                });
+
+                // Close mobile menu
+                navLinksContainer.classList.remove('open');
+                navToggle.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // If navigating to zeno, ensure first doc is shown
+                if (pageId === 'zeno') {
+                    const firstDoc = ZENO_DOCS[0];
+                    if (firstDoc) showZenoDoc(firstDoc.id);
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    if (page) navigate(page);
+                });
+            });
+
+            // Brand click
+            document.querySelector('.nav-brand')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                navigate('home');
+            });
+
+            // Footer links
+            document.querySelectorAll('.footer .links a[data-page]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    if (page) navigate(page);
+                });
+            });
+
+            // Mobile toggle
+            navToggle.addEventListener('click', function() {
+                const isOpen = navLinksContainer.classList.toggle('open');
+                this.classList.toggle('active');
+                this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            // Close mobile menu on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.navbar')) {
+                    navLinksContainer.classList.remove('open');
+                    navToggle.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // ----- Copy code button functionality -----
+            window.copyCode = function(btn) {
+                const pre = btn.closest('.code-block').querySelector('pre');
+                if (!pre) return;
+                const text = pre.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const orig = btn.textContent;
+                    btn.textContent = '✓ Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = orig;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback
+                    const range = document.createRange();
+                    range.selectNode(pre);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(range);
+                    document.execCommand('copy');
+                    const orig = btn.textContent;
+                    btn.textContent = '✓ Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = orig;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            };
+
+            // ----- Ensure home is active on load -----
+            navigate('home');
+
+            // ----- Handle hash-based navigation (optional) -----
+            if (window.location.hash) {
+                const hash = window.location.hash.replace('#', '');
+                if (pages[hash]) {
+                    setTimeout(() => navigate(hash), 100);
+                }
+            }
+
+            // ----- Console info -----
+            console.log('%c Xam3aDev — Indie Game Developer ', 'background:#6F00FF;color:#fff;font-size:1.4rem;padding:8px 16px;border-radius:6px;');
+            console.log('%c Built with ❤️ by Xam3aDev ', 'color:#9898b0;font-size:1rem;');
+            console.log('%c Zeno 1.0 — https://github.com/xam3adev/zeno ', 'color:#a78bfa;font-size:0.9rem;');
+        });
+    </script>
+
+</body>
+</html>
